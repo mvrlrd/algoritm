@@ -11,7 +11,7 @@ private static LinkedList linkedList = new LinkedList();
         linkedList.insert("bb",14);
         linkedList.insertLast("last",110);
         linkedList.insert("cc",16);
-        
+
         linkedList.display();
 
         linkedList.delete();
