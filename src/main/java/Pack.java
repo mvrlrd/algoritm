@@ -1,33 +1,27 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Pack {
+    protected static List<Item> bestSet = new ArrayList<Item>();
+    protected static double maxWeight;
+    protected double bestPrice;
 
-
-    public static List<Item> bestItems2 = new ArrayList<Item>();
-
-    private static double maxW;
-    int n;
-
-    public double bestPrice;
-
-    public Pack(double _maxW) {
-        maxW = _maxW;
+    public Pack(double _maxWeight) {
+        maxWeight = _maxWeight;
     }
 
-
-    //вычисляет общий вес набора предметов
-    private double CalcWeigth(List<Item> items) {
-        double sumW = 0;
+    //Вычисляем общий вес сета
+    private double calculateWeigth(List <Item> items) {
+        double sumWeight = 0;
         for (int i = 0; i < items.size() ; i++) {
-            sumW += items.get(i).weight;
+            sumWeight += items.get(i).weight;
         }
-
-        return sumW;
+        return sumWeight;
     }
 
-    //вычисляет общую стоимость набора предметов
-    private double CalcPrice(List<Item> items) {
+    //вычисляет общую стоимость сета
+    private double calculatePrice(List<Item> items) {
         double sumPrice = 0;
         for (int i = 0; i < items.size() ; i++) {
             sumPrice += items.get(i).price;
@@ -35,73 +29,59 @@ public class Pack {
         return sumPrice;
     }
 
-    private void CheckSet(List<Item> items) {
-
-            if(CalcWeigth(items) <= maxW && CalcPrice(items) > bestPrice)
+    //проверяем является ли набор лучше тех которые уже были предложены
+    private void bestSetChecker(List<Item> items) {
+            if(calculateWeigth(items) <= maxWeight && calculatePrice(items) > bestPrice)
             {
-
-
                 for (int i = 0; i < items.size() ; i++) {
-                    if (!bestItems2.contains(items.get(i))) {
-                        bestItems2.add(items.get(i));
+                    //если лучший набор не содержит предметы из нового лучшего набора - добавляем их
+                    if (!bestSet.contains(items.get(i))) {
+                        bestSet.add(items.get(i));
                     }
-                    for (int j = 0; j <bestItems2.size() ; j++) {
-                        if (!items.contains(bestItems2.get(i))){
-                            bestItems2.remove(i);
+                    for (int j = 0; j < bestSet.size() ; j++) {
+                        //если лучший набор содержит предметы которые не входят в новый лучший набор - удаляем их
+                        if (!items.contains(bestSet.get(i))){
+                            bestSet.remove(i);
                         }
                     }
-
-
                 }
-//                bestItems = items;
-                bestPrice = CalcPrice(items);
+                bestPrice = calculatePrice(items);
             }
-//        }
     }
 
-
-
-
-
-
-//    }
-
-    public void delete(List<Item> items){
-            CheckSet(items);
+    public void searchingForBestSet(List<Item> items){
+            bestSetChecker(items);
         if (items.size()==0){
             return;
         }
-del(items);
-//        for (int i = 0; i < items.size(); i++) {
-//
-//            Item it = items.get(0);
-//            items.remove(0);
-//            CheckSet(items);
-//            items.add(it);
-//        }
-//        for (int i = 0; i <items.size() ; i++) {
-//
-//            Item it = items.get(0);
-//            items.remove(i);
-//            delete(items);
-//            items.add(it);
-//        }
-
-
+        refreshSet(items);
     }
-    public void del(List<Item>list){
+    // прогоняем все варианты наборов
+    private void refreshSet(List<Item>list){
         for (int i = 0; i <list.size() ; i++) {
             Item item = list.get(0);
             list.remove(0);
-            CheckSet(list);
-
-            del(list);
+            bestSetChecker(list);
+            refreshSet(list);
             list.add(item);
         }
     }
 
-    public List<Item> GetBestSet()
+    public List<Item> getBestSet()
     {
-        return bestItems2;
+        return bestSet;
+    }
+
+    @Override
+    public String toString() {
+        String[] names = new String[getBestSet().size()];
+        for (int i = 0; i <getBestSet().size() ; i++) {
+           names[i]= getBestSet().get(i).name;
+        }
+        return "Pack {" +
+                "bestPrice = " + bestPrice +
+                " sumWeight = "+ calculateWeigth(getBestSet())+
+                "  items = " + Arrays.toString(names)+
+                '}';
     }
 }
