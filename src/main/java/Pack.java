@@ -71,21 +71,33 @@ public class Pack {
         if (items.size()==0){
             return;
         }
-        for (int i = 0; i < items.size(); i++) {
+del(items);
+//        for (int i = 0; i < items.size(); i++) {
+//
+//            Item it = items.get(0);
+//            items.remove(0);
+//            CheckSet(items);
+//            items.add(it);
+//        }
+//        for (int i = 0; i <items.size() ; i++) {
+//
+//            Item it = items.get(0);
+//            items.remove(i);
+//            delete(items);
+//            items.add(it);
+//        }
 
-            Item it = items.get(0);
-            items.remove(0);
-            CheckSet(items);
-            items.add(it);
+
+    }
+    public void del(List<Item>list){
+        for (int i = 0; i <list.size() ; i++) {
+            Item item = list.get(0);
+            list.remove(0);
+            CheckSet(list);
+
+            del(list);
+            list.add(item);
         }
-        for (int i = 0; i <items.size() ; i++) {
-
-            Item it = items.get(0);
-            items.remove(i);
-            delete(items);
-            items.add(it);
-        }
-
     }
 
     public List<Item> GetBestSet()

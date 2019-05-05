@@ -15,15 +15,17 @@ public class App {
 
 
        final Item item1 = new Item("a",10,11);
-        final Item item2 = new Item("b",1,1);
+        final Item item2 = new Item("b",1,22);
         final Item item3 = new Item("c",13,20);
-        final Item item4 = new Item("d",29,60);
+        final Item item4 = new Item("d",29,62);
+        final Item item5 = new Item("e",1,1);
 
         List<Item> list = new ArrayList<Item>(){{
            add(item1);
             add(item2);
             add(item3);
             add(item4);
+            add(item5);
         }};
 //        System.out.println(list.size()+" size");
 //        for (int i = 0; i <list.size() ; i++) {
