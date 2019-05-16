@@ -233,7 +233,7 @@ public class Tree{
                     localStack.push(null);
                     localStack.push(null);
                 }
-                for(int j=0; j < nBlanks * 2+2 ; j++)
+                for(int j=0; j < nBlanks * 3 ; j++)
                     System.out.print(' ');
             }
             System.out.println(" ");
@@ -245,7 +245,10 @@ public class Tree{
         }
     }
 
-}
+
+    }
+
+
 
 
 
